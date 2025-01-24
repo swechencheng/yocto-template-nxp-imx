@@ -1,0 +1,4 @@
+[submodule "sources/openembedded-core"]
+	path = sources/openembedded-core
+	url = git://git.openembedded.org/openembedded-core
+	branch = scarthgap
