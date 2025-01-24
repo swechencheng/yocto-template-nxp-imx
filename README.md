@@ -24,3 +24,25 @@ These submodules use the version from `imx-6.6.23-2.0.0.xml`:
 - meta-freescale-3rdparty
 - meta-freescale-distro
 - meta-imx
+
+## Quick Start
+
+### Setup up your build environment (once)
+
+To ensure a well controlled build environment which is reproductive, we use a docker image built by [this](./Dockerfile).
+
+Build your docker image by running:
+```bash
+docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t yocto-5.0 .
+```
+This will build a Docker image named `yocto-5.0`.
+
+### Spin up your build environment everytime when you need to run Yocto build
+
+With your docker image `yocto-5.0` ready, run:
+```bash
+docker run --rm -it -u $(id -u):$(id -g) -v $(pwd):$(pwd) yocto-5.0
+```
+
+A Docker container will give you a clean environment for performing Yocto build.
+The repo root dir will be bind mounted into the container with `-v $(pwd):$(pwd)` option.
