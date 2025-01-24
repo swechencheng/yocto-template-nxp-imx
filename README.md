@@ -46,3 +46,10 @@ docker run --rm -it -u $(id -u):$(id -g) -v $(pwd):$(pwd) yocto-5.0
 
 A Docker container will give you a clean environment for performing Yocto build.
 The repo root dir will be bind mounted into the container with `-v $(pwd):$(pwd)` option.
+
+### Kick-off the build
+
+In your Docker container, go to repo root dir, and run:
+```bash
+./build.sh
+```
