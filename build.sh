@@ -6,6 +6,7 @@ shopt -s failglob
 # Default options
 FORCE_CLEANALL=0
 KEEP_GOING=0
+BLACKLIST=0
 
 # Default settings
 REPO_ROOT="$(git rev-parse --show-toplevel)"
@@ -50,6 +51,9 @@ Usage: $0 [OPTIONS]... [TARGET]
 Wrapper of bitbake engine which builds Yocto.
 
 OPTIONS:
+    -B                  If specified, blacklist certain recipes
+                            which conflicts with OE-core.
+
     -h                  If specified, display this help message.
 
     -H                  If specified, clean the build workspace thouroughly
@@ -78,8 +82,11 @@ EOF
 }
 
 # Parse args
-while getopts "Hhk" opt; do
+while getopts "BHhk" opt; do
     case "$opt" in
+        B)
+            BLACKLIST=1
+            ;;
         h)
             show_help
             exit 0
@@ -164,6 +171,7 @@ fi
 # Show options for debugging fore proceed to build
 log_info "FORCE_CLEANALL=$FORCE_CLEANALL"
 log_info "KEEP_GOING=$KEEP_GOING"
+log_info "BLACKLIST=$BLACKLIST"
 
 # Use a subshell when sourcing oe-init-build-env, so that its effects do not become permanent
 (
@@ -193,6 +201,13 @@ log_info "KEEP_GOING=$KEEP_GOING"
     echo "PREFERRED_PROVIDER_virtual/kernel = \"linux-imx\"" >> conf/local.conf
     echo "PREFERRED_PROVIDER_linux-mfgtool = \"linux-imx-mfgtool\"" >> conf/local.conf
     echo "PREFERRED_PROVIDER_u-boot-mfgtool = \"u-boot-imx-mfgtool\"" >> conf/local.conf
+
+    if [ ${BLACKLIST} -ne 0 ]; then
+        # TODO: REMOVE THIS IN FUTURE IF meta-imx FIXES!
+        # Temporary fix. The version of cryptodev in meta-imx (1.13) doesn't match version in openembedded-core (yocto-5.0.6).
+        log_warn "Blacklisting cryptodev-linux_1.13.bbappend since it conflicts with OE-core (yocto-5.0.6) cryptodev-linux_1.14."
+        echo "BBMASK += \"cryptodev-linux_1.13.bbappend\"" >> conf/local.conf
+    fi
 
     # Build the specific target and quit
     if [[ -n "$INPUT" && -n "$TARGET" && "$INPUT" == "$TARGET" ]]; then

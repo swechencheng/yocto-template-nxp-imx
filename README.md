@@ -53,3 +53,15 @@ In your Docker container, go to repo root dir, and run:
 ```bash
 ./build.sh
 ```
+
+## Known issue
+
+### meta-imx cryptodev-linux conflicts with openembedded-core
+
+You will encounter this error if you don't provide `-B` option when you run `build.sh`.
+```
+ERROR: No recipes in default available for:
+  yocto-template-nxp-imx/sources/meta-imx/meta-imx-bsp/recipes-kernel/cryptodev/cryptodev-linux_1.13.bbappend
+```
+
+Using `-B` option will blacklist `cryptodev-linux_1.13.bbappend` from `meta-imx`.
