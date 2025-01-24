@@ -10,3 +10,7 @@
 	path = sources/meta-openembedded
 	url = git://git.openembedded.org/meta-openembedded
 	branch = scarthgap
+[submodule "sources/meta-yocto"]
+	path = sources/meta-yocto
+	url = https://git.yoctoproject.org/git/meta-yocto
+	branch = scarthgap
