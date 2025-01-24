@@ -1,3 +1,11 @@
+# User customization
+.vscode/
+.vscode-ctags
+
+# Project settings
+build/
+deploy/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
