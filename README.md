@@ -65,3 +65,47 @@ ERROR: No recipes in default available for:
 ```
 
 Using `-B` option will blacklist `cryptodev-linux_1.13.bbappend` from `meta-imx`.
+
+### meta-imx firmware-imx recipe conflicts with meta-freescale
+
+You will encounter this error if you run `./build.sh -B firmware-imx`:
+
+```
+ERROR: firmware-imx-1_8.24-r0 do_populate_lic: QA Issue: firmware-imx: The LIC_FILES_CHKSUM does not match for file://yocto-template-nxp-imx/sources/meta-freescale/EULA;md5=10c0fda810c63b052409b15a5445671a
+firmware-imx: The new md5 checksum is 44a8052c384584ba09077e85a3d1654f
+firmware-imx: Here is the selected license text:
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+LA_OPT_NXP_Software_License v53 December 2023
+IMPORTANT.  Read the following NXP Software License Agreement ("Agreement")
+completely. By selecting the "I Accept" button at the end of this page, or by
+downloading, installing, or using the Licensed Software, you indicate that you
+accept the terms of the Agreement, and you acknowledge that you have the
+authority, for yourself or on behalf of your company, to bind your company to
+these terms. You may then download or install the file. In the event of a
+conflict between the terms of this Agreement and any license terms and
+conditions for NXP’s proprietary software embedded anywhere in the Licensed
+Software file, the terms of this Agreement shall control.  If a separate
+...
+
+TES Electronic Solutions Germany (TES):  TES 3D Surround View software and
+associated data and documentation may only be used for evaluation purposes and
+for demonstration to third parties in integrated form on a board package
+containing an NXP S32V234 device. Licensee may not distribute or sublicense the
+TES software. Your license to the TES software may be terminated at any time
+upon notice.
+
+Vivante: Distribution of Vivante software must be a part of, or embedded
+within, Authorized Systems that include a Vivante Graphics Processing Unit.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+firmware-imx: Check if the license information has changed in yocto-template-nxp-imx/sources/meta-freescale/EULA to verify that the LICENSE value "Proprietary" remains valid [license-checksum]
+ERROR: firmware-imx-1_8.24-r0 do_populate_lic: Fatal QA errors were found, failing task.
+ERROR: Logfile of failure stored in: yocto-template-nxp-imx/build/tmp/work/all-fsl-linux/firmware-imx/8.24/temp/log.do_populate_lic.5459
+ERROR: Task (yocto-template-nxp-imx/sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx_8.24.bb:do_populate_lic) failed with exit code '1'
+```
+
+This is due to the meta layer version mismatching in between `meta-imx` and `meta-freescale` when using version defined in [`imx-6.6.23-2.0.0.xml`](https://github.com/nxp-imx/imx-manifest/blob/imx-linux-scarthgap/imx-6.6.23-2.0.0.xml):
+
+```
+sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx-8.24.inc
+sources/meta-freescale/recipes-bsp/firmware-imx/firmware-imx-8.23.inc
+```
