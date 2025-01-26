@@ -202,6 +202,9 @@ log_info "BLACKLIST=$BLACKLIST"
     echo "PREFERRED_PROVIDER_linux-mfgtool = \"linux-imx-mfgtool\"" >> conf/local.conf
     echo "PREFERRED_PROVIDER_u-boot-mfgtool = \"u-boot-imx-mfgtool\"" >> conf/local.conf
 
+    # To use some recipe e.g. 'firmware-imx' you need to accept the Freescale EULA
+    echo "ACCEPT_FSL_EULA = \"1\"" >> conf/local.conf
+
     if [ ${BLACKLIST} -ne 0 ]; then
         # TODO: REMOVE THIS IN FUTURE IF meta-imx FIXES!
         # Temporary fix. The version of cryptodev in meta-imx (1.13) doesn't match version in openembedded-core (yocto-5.0.6).
