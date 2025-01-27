@@ -54,6 +54,35 @@ In your Docker container, go to repo root dir, and run:
 ./build.sh
 ```
 
+## Things behind the `build.sh`
+
+This is created as a wrapper for people to easily kick off bitbake with an opinionized trim of dependencies.
+
+The following meta policies are picked as a sample in [`build.sh`](./build.sh):
+
+```
+DISTRO=fsl-wayland
+TEMPLATE_LAYER=openembedded-core/meta
+TEMPLATE=default
+MACHINE=imx6ulevk
+IMAGE=core-image-minimal
+INITRAMFS_IMAGE=fsl-image-mfgtool-initramfs
+```
+
+You can adjust them to adapt to your own favour.
+
+## Further work
+
+### Use custom minimal distro
+
+If you want to further minimize the meta layer dependencies, you can create your own distro instead of using distros from FSL/FSLC which are based on poky distro.
+
+Then you can get rid of the following layers:
+- meta-yocto
+- meta-freescale-distro
+
+However, this will require you to create your own custom meta layer, which most vendors do.
+
 ## Known issue
 
 ### meta-imx cryptodev-linux conflicts with openembedded-core
