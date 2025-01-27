@@ -9,16 +9,16 @@ A sample template of using the minimal BSP layers needed to build Yocto on NXP i
 | bitbake | 2.8 | yocto-5.0.6 (2.8.6) |
 | meta-openembedded | scarthgap | 2e3126c9c16bb3df0560f6b3896d01539a3bfad7 |
 | meta-yocto | scarthgap | bd166d1fb8dc1bed7e71bd06b970a3da9149203e |
-| meta-arm | scarthgap | 8aa8a1f17f5b64bc691544f989f04fc83df98adb |
-| meta-freescale | scarthgap | 41b923e59e048b9b2942ff737a4ddac386954c62 |
-| meta-freescale-3rdparty | scarthgap |  8b61684f0b1ba8bacdf3a69d993445e9791d4932 |
-| meta-freescale-distro | scarthgap | 158cc55b6ee30d09957b380859dba52c0f6af68d |
-| meta-imx | scarthgap-6.6.23-2.0.0 | rel_imx_6.6.23_2.0.0 |
+| meta-arm | scarthgap | 1b85bbb4cab9658da3cd926c62038b8559c5c64e |
+| meta-freescale | scarthgap | 0f8091c63dd8805610c09b08409bc58492a3b16f |
+| meta-freescale-3rdparty | scarthgap |  6c063450d464eb2f380443c7d9af1b94ce9b9d75 |
+| meta-freescale-distro | scarthgap | b9d6a5d9931922558046d230c1f5f4ef6ee72345 |
+| meta-imx | scarthgap-6.6.36-2.1.0 | rel_imx_6.6.36_2.1.0 |
 
 **i.MX layer source:**
-https://github.com/nxp-imx/imx-manifest/blob/imx-linux-scarthgap/imx-6.6.23-2.0.0.xml
+https://github.com/nxp-imx/imx-manifest/blob/imx-linux-scarthgap/imx-6.6.36-2.1.0.xml
 
-These submodules use the version from `imx-6.6.23-2.0.0.xml`:
+These submodules use the version from `imx-6.6.36-2.1.0.xml`:
 - meta-arm
 - meta-freescale
 - meta-freescale-3rdparty
@@ -100,11 +100,11 @@ Using `-B` option will blacklist `cryptodev-linux_1.13.bbappend` from `meta-imx`
 You will encounter this error if you run `./build.sh -B firmware-imx`:
 
 ```
-ERROR: firmware-imx-1_8.24-r0 do_populate_lic: QA Issue: firmware-imx: The LIC_FILES_CHKSUM does not match for file://yocto-template-nxp-imx/sources/meta-freescale/EULA;md5=10c0fda810c63b052409b15a5445671a
-firmware-imx: The new md5 checksum is 44a8052c384584ba09077e85a3d1654f
+ERROR: firmware-imx-1_8.25-r0 do_populate_lic: QA Issue: firmware-imx: The LIC_FILES_CHKSUM does not match for file://yocto-template-nxp-imx/sources/meta-freescale/EULA;md5=ca53281cc0caa7e320d4945a896fb837
+firmware-imx: The new md5 checksum is 10c0fda810c63b052409b15a5445671a
 firmware-imx: Here is the selected license text:
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-LA_OPT_NXP_Software_License v53 December 2023
+LA_OPT_NXP_Software_License v56 April 2024
 IMPORTANT.  Read the following NXP Software License Agreement ("Agreement")
 completely. By selecting the "I Accept" button at the end of this page, or by
 downloading, installing, or using the Licensed Software, you indicate that you
@@ -127,14 +127,14 @@ Vivante: Distribution of Vivante software must be a part of, or embedded
 within, Authorized Systems that include a Vivante Graphics Processing Unit.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 firmware-imx: Check if the license information has changed in yocto-template-nxp-imx/sources/meta-freescale/EULA to verify that the LICENSE value "Proprietary" remains valid [license-checksum]
-ERROR: firmware-imx-1_8.24-r0 do_populate_lic: Fatal QA errors were found, failing task.
-ERROR: Logfile of failure stored in: yocto-template-nxp-imx/build/tmp/work/all-fsl-linux/firmware-imx/8.24/temp/log.do_populate_lic.5459
-ERROR: Task (yocto-template-nxp-imx/sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx_8.24.bb:do_populate_lic) failed with exit code '1'
+ERROR: firmware-imx-1_8.25-r0 do_populate_lic: Fatal QA errors were found, failing task.
+ERROR: Logfile of failure stored in: yocto-template-nxp-imx/build/tmp/work/all-fsl-linux/firmware-imx/8.25/temp/log.do_populate_lic.18239
+ERROR: Task (yocto-template-nxp-imx/sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx_8.25.bb:do_populate_lic) failed with exit code '1'
 ```
 
-This is due to the meta layer version mismatching in between `meta-imx` and `meta-freescale` when using version defined in [`imx-6.6.23-2.0.0.xml`](https://github.com/nxp-imx/imx-manifest/blob/imx-linux-scarthgap/imx-6.6.23-2.0.0.xml):
+This is due to the meta layer version mismatching in between `meta-imx` and `meta-freescale` when using version defined in [`imx-6.6.36-2.1.0.xml`](https://github.com/nxp-imx/imx-manifest/blob/imx-linux-scarthgap/imx-6.6.36-2.1.0.xml):
 
 ```
-sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx-8.24.inc
-sources/meta-freescale/recipes-bsp/firmware-imx/firmware-imx-8.23.inc
+sources/meta-imx/meta-imx-bsp/recipes-bsp/firmware-imx/firmware-imx-8.25.inc
+sources/meta-freescale/recipes-bsp/firmware-imx/firmware-imx-8.24.inc
 ```
